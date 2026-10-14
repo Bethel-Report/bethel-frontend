@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react"
 import { AppLayout } from "@/shared/layouts/AppLayout"
+import { NotFoundPage } from "@/shared/layouts/NotFoundPage"
 import { BrowserRouter, Route, Routes } from "react-router"
 
 const HomePage = lazy(() =>
@@ -15,7 +16,7 @@ export function AppRoutes() {
             <Route index path="/" element={<HomePage />} />
             <Route path="/login" element={null} />
           </Route>
-          <Route path="*" element={null} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

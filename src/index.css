@@ -30,9 +30,11 @@
 
   --overlay: rgb(23 20 30 / 40%);
 
-  --fs-xs: 12px;
-  --fs-sm: 14px;
-  --fs-md: 16px;
+  --fs-xs: 10px;
+  --fs-sm: 12px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xg: 18px;
 }
 
 @theme inline {
@@ -63,6 +65,8 @@
   --text-xs: var(--fs-xs);
   --text-sm: var(--fs-sm);
   --text-md: var(--fs-md);
+  --text-lg: var(--fs-lg);
+  --text-xg: var(--fs-xg);
 }
 
 @layer base {
