@@ -1,14 +1,25 @@
 import { Button } from "@/shared/components/button"
-import { Bell, ChevronRight, Menu } from "lucide-react"
+import { useSidebar } from "@/shared/components/sidebar"
+import { Avatar, AvatarFallback } from "@/shared/components/avatar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/shared/components/breadcrumb"
+import { Bell, Menu } from "lucide-react"
 import { Link } from "react-router"
 
 type HeaderProps = {
   current: string
   unread: number
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export function Header({ current, unread, setOpen }: HeaderProps) {
+export function Header({ current, unread }: HeaderProps) {
+  const { toggleSidebar } = useSidebar()
+
   return (
     <header className="sticky top-0 z-20 grid h-[70px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-border bg-card px-4 lg:px-6 xl:px-8">
       <div className="flex min-w-0 items-center gap-3">
@@ -17,15 +28,23 @@ export function Header({ current, unread, setOpen }: HeaderProps) {
           size="icon"
           aria-label="Abrir menu"
           className="lg:hidden"
-          onClick={() => setOpen(true)}
+          onClick={toggleSidebar}
         >
           <Menu />
         </Button>
-        <div className="hidden items-center gap-2 text-sm text-muted-foreground sm:flex">
-          <span>Organização</span>
-          <ChevronRight size={12} />
-          <span className="text-foreground">{current}</span>
-        </div>
+        <Breadcrumb className="hidden sm:block">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Organização</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{current}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
       <div className="flex shrink-0 items-center gap-3 sm:gap-5">
         <Button asChild variant="ghost" size="icon" title="Notificações">
@@ -40,12 +59,12 @@ export function Header({ current, unread, setOpen }: HeaderProps) {
             )}
           </Link>
         </Button>
-        <Link
-          to="/perfil"
-          className="grid size-8 place-items-center rounded-full bg-secondary text-xs font-semibold text-primary"
-          aria-label="Meu perfil"
-        >
-          MC
+        <Link to="/perfil" aria-label="Meu perfil">
+          <Avatar className="size-8">
+            <AvatarFallback className="bg-secondary text-xs font-semibold text-primary">
+              MC
+            </AvatarFallback>
+          </Avatar>
         </Link>
       </div>
     </header>

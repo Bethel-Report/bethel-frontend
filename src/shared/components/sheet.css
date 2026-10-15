@@ -1,0 +1,82 @@
+[data-slot="sheet-content"][data-side="left"] {
+  --sheet-translate-x: -100%;
+  --sheet-translate-y: 0%;
+}
+
+[data-slot="sheet-content"][data-side="right"] {
+  --sheet-translate-x: 100%;
+  --sheet-translate-y: 0%;
+}
+
+[data-slot="sheet-content"][data-side="top"] {
+  --sheet-translate-x: 0%;
+  --sheet-translate-y: -100%;
+}
+
+[data-slot="sheet-content"][data-side="bottom"] {
+  --sheet-translate-x: 0%;
+  --sheet-translate-y: 100%;
+}
+
+[data-slot="sheet-content"][data-state="open"] {
+  animation: sheet-enter 300ms ease-out both;
+}
+
+[data-slot="sheet-content"][data-state="closed"] {
+  animation: sheet-exit 200ms ease-in both;
+}
+
+[data-slot="sheet-overlay"][data-state="open"] {
+  animation: sheet-overlay-enter 300ms ease-out both;
+}
+
+[data-slot="sheet-overlay"][data-state="closed"] {
+  animation: sheet-overlay-exit 200ms ease-in both;
+}
+
+@keyframes sheet-enter {
+  from {
+    transform: translate(var(--sheet-translate-x), var(--sheet-translate-y));
+  }
+
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes sheet-exit {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(var(--sheet-translate-x), var(--sheet-translate-y));
+  }
+}
+
+@keyframes sheet-overlay-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sheet-overlay-exit {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-slot="sheet-content"],
+  [data-slot="sheet-overlay"] {
+    animation-duration: 0.01ms;
+  }
+}

@@ -1,4 +1,3 @@
-import { useState } from "react"
 import {
   LayoutDashboard,
   Landmark,
@@ -16,6 +15,7 @@ import { Footer } from "@/app/components/Footer"
 import { Main } from "@/app/components/Main"
 import { Header } from "@/app/components/Header"
 import { Navbar } from "@/app/components/Navbar"
+import { SidebarProvider } from "@/shared/components/sidebar"
 
 const navItems = [
   { to: "/", label: "Visão geral", icon: LayoutDashboard, group: "PRINCIPAL" },
@@ -42,7 +42,6 @@ const navItems = [
 
 export function AppLayout() {
   const { pathname } = useLocation()
-  const [open, setOpen] = useState(false)
   const profile = "Grande Conselho"
   const notifications = [
     {
@@ -63,32 +62,24 @@ export function AppLayout() {
         ? "Relatório consolidado"
         : "Bethel Report")
 
-  if (pathname === "/acesso") return <>{<Outlet />}</>
+  if (pathname === "/acesso") return <Outlet />
 
   return (
-    <>
-      {open && (
-        <div
-          className="fixed inset-0 z-30 bg-overlay lg:hidden"
-          onClick={() => setOpen(false)}
-        />
-      )}
+    <SidebarProvider mobileBreakpoint={1024}>
       <Navbar
         profile={profile}
         pathname={pathname}
         unread={unread}
         navItems={navItems}
         isMember={isMember}
-        open={open}
-        setOpen={setOpen}
       />
-      <div className="lg:ml-[220px] xl:ml-[242px]">
-        <Header current={current} unread={unread} setOpen={setOpen} />
+      <div className="flex min-w-0 flex-1 flex-col">
+        <Header current={current} unread={unread} />
         <Main>
           <Outlet />
         </Main>
         <Footer />
       </div>
-    </>
+    </SidebarProvider>
   )
 }

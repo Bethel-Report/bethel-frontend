@@ -57,11 +57,13 @@ const SidebarProvider = React.forwardRef<
     defaultOpen?: boolean
     open?: boolean
     onOpenChange?: (open: boolean) => void
+    mobileBreakpoint?: number
   }
 >(
   (
     {
       defaultOpen = true,
+      mobileBreakpoint,
       open: openProp,
       onOpenChange: setOpenProp,
       className,
@@ -71,8 +73,15 @@ const SidebarProvider = React.forwardRef<
     },
     ref,
   ) => {
-    const isMobile = useIsMobile()
+    const isMobile = useIsMobile(mobileBreakpoint)
     const [openMobile, setOpenMobile] = React.useState(false)
+
+    React.useEffect(() => {
+      if (!isMobile && openMobile) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setOpenMobile(false)
+      }
+    }, [isMobile, openMobile])
 
     // This is the internal state of the sidebar.
     // We use openProp and setOpenProp for control from outside the component.
