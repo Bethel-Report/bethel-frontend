@@ -6,6 +6,11 @@ import { BrowserRouter, Route, Routes } from "react-router"
 const HomePage = lazy(() =>
   import("@/features/HomePage").then((m) => ({ default: m.HomePage })),
 )
+const ComponentsPage = lazy(() =>
+  import("@/features/ComponentsPage").then((m) => ({
+    default: m.ComponentsPage,
+  })),
+)
 
 export function AppRoutes() {
   return (
@@ -16,6 +21,7 @@ export function AppRoutes() {
             <Route index path="/" element={<HomePage />} />
             <Route path="/login" element={null} />
           </Route>
+          <Route path="/componentes" element={<ComponentsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

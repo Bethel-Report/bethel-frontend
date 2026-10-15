@@ -8,6 +8,9 @@
   --card: #ffffff;
   --card-foreground: #2b2a34;
 
+  --popover: #ffffff;
+  --popover-foreground: #2b2a34;
+
   --primary: #835ec9;
   --primary-foreground: #ffffff;
   --secondary: #efeafd;
@@ -23,12 +26,15 @@
   --ring: #835ec9;
 
   --success: #156e4f;
-  --success-soft: #dff5ea;
+  --success-foreground: #dff5ea;
 
   --warning: #a56d0f;
-  --warning-soft: #fff1da;
+  --warning-foreground: #fff1da;
 
-  --overlay: rgb(23 20 30 / 40%);
+  --destructive: #b83248;
+  --destructive-foreground: #ffffff;
+
+  --overlay: #17141e66;
 
   --fs-xs: 10px;
   --fs-sm: 12px;
@@ -42,6 +48,8 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
@@ -53,10 +61,12 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
-  --color-success-soft: var(--success-soft);
+  --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
-  --color-warning-soft: var(--warning-soft);
+  --color-warning-foreground: var(--warning-foreground);
   --color-overlay: var(--overlay);
 
   --font-display: "Manrope", sans-serif;
