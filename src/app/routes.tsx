@@ -4,11 +4,16 @@ import { NotFoundPage } from "@/shared/layouts/NotFoundPage"
 import { BrowserRouter, Route, Routes } from "react-router"
 
 const HomePage = lazy(() =>
-  import("@/features/HomePage").then((m) => ({ default: m.HomePage })),
+  import("@/shared/pages/HomePage").then((m) => ({ default: m.HomePage })),
 )
 const ComponentsPage = lazy(() =>
-  import("@/features/ComponentsPage").then((m) => ({
+  import("@/shared/pages/ComponentsPage").then((m) => ({
     default: m.ComponentsPage,
+  })),
+)
+const LoginPage = lazy(() =>
+  import("@/features/auth/pages/LoginPage").then((m) => ({
+    default: m.LoginPage,
   })),
 )
 
@@ -17,11 +22,11 @@ export function AppRoutes() {
     <BrowserRouter>
       <Suspense fallback={null}>
         <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/componentes" element={<ComponentsPage />} />
           <Route element={<AppLayout />}>
             <Route index path="/" element={<HomePage />} />
-            <Route path="/login" element={null} />
           </Route>
-          <Route path="/componentes" element={<ComponentsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
