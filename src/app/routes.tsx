@@ -11,6 +11,11 @@ const ComponentsPage = lazy(() =>
     default: m.ComponentsPage,
   })),
 )
+const UsersPage = lazy(() =>
+  import("@/features/users/pages/UsersPage").then((m) => ({
+    default: m.UsersPage,
+  })),
+)
 
 export function AppRoutes() {
   return (
@@ -19,6 +24,7 @@ export function AppRoutes() {
         <Routes>
           <Route element={<AppLayout />}>
             <Route index path="/" element={<HomePage />} />
+            <Route path="/membros" element={<UsersPage />} />
             <Route path="/login" element={null} />
           </Route>
           <Route path="/componentes" element={<ComponentsPage />} />
