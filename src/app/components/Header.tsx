@@ -1,6 +1,5 @@
 import { Button } from "@/shared/components/button"
 import { useSidebar } from "@/shared/components/sidebar"
-import { Avatar, AvatarFallback } from "@/shared/components/avatar"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,6 +10,7 @@ import {
 } from "@/shared/components/breadcrumb"
 import { Bell, Menu } from "lucide-react"
 import { Link } from "react-router"
+import { UserAvatar } from "@/features/users/components/UserAvatar"
 
 type HeaderProps = {
   current: string
@@ -60,11 +60,7 @@ export function Header({ current, unread }: HeaderProps) {
           </Link>
         </Button>
         <Link to="/perfil" aria-label="Meu perfil">
-          <Avatar className="size-8">
-            <AvatarFallback className="bg-secondary text-xs font-semibold text-primary">
-              MC
-            </AvatarFallback>
-          </Avatar>
+          <UserAvatar name={"Mariana"} />
         </Link>
       </div>
     </header>

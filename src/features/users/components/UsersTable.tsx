@@ -1,6 +1,6 @@
 import { Eye } from "lucide-react"
-import { Avatar, AvatarFallback } from "@/shared/components/avatar"
 import { Button } from "@/shared/components/button"
+import { Link } from "react-router"
 import {
   Table,
   TableBody,
@@ -11,17 +11,10 @@ import {
 } from "@/shared/components/table"
 import { StatusBadge } from "../components/StatusBadge"
 import type { User } from "../types"
+import { UserAvatar } from "./UserAvatar"
 
 type UsersTableProps = {
   items: User[]
-}
-
-function initials(name: string) {
-  return name
-    .split(" ")
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join("")
 }
 
 export function UsersTable({ items }: UsersTableProps) {
@@ -51,11 +44,7 @@ export function UsersTable({ items }: UsersTableProps) {
           <TableRow key={user.id} className="h-[69px] hover:bg-background/70">
             <TableCell className="pl-5">
               <div className="flex min-w-0 items-center gap-3">
-                <Avatar className="size-9">
-                  <AvatarFallback className="bg-secondary text-xs font-semibold text-primary">
-                    {initials(user.name)}
-                  </AvatarFallback>
-                </Avatar>
+                <UserAvatar name={user.name} />
                 <div className="min-w-0 leading-tight">
                   <div className="truncate text-md font-semibold">
                     {user.name}
@@ -76,14 +65,18 @@ export function UsersTable({ items }: UsersTableProps) {
             <TableCell className="pr-5">
               <div className="flex items-center justify-center gap-1">
                 <Button
-                  type="button"
+                  asChild
                   variant="ghost"
                   size="icon"
                   className="border border-muted-foreground/10"
-                  aria-label={`Visualizar ${user.name}`}
-                  title={`Visualizar ${user.name}`}
                 >
-                  <Eye aria-hidden="true" />
+                  <Link
+                    to={`/membros/${user.id}`}
+                    aria-label={`Visualizar ${user.name}`}
+                    title={`Visualizar ${user.name}`}
+                  >
+                    <Eye aria-hidden="true" />
+                  </Link>
                 </Button>
               </div>
             </TableCell>

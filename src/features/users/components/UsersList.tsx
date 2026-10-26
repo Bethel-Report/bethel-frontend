@@ -3,6 +3,7 @@ import type { User } from "../types"
 import { StatusBadge } from "./StatusBadge"
 import { Button } from "@/shared/components/button"
 import React from "react"
+import { Link } from "react-router"
 import {
   ResponsiveRowContainer,
   ResponsiveRowDataContainer,
@@ -35,14 +36,18 @@ export function UsersList({ items }: UsersListProps) {
               </ResponsiveRowHighlightDetail>
             </ResponsiveRowHighlight>
             <Button
-              type="button"
+              asChild
               variant="ghost"
               className="h-12 bg-muted-foreground/5 text-lg border border-muted-foreground/10"
-              aria-label={`Visualizar ${user.name}`}
-              title={`Visualizar ${user.name}`}
             >
-              <Eye className="w-4 h-4" />
-              Visualizar
+              <Link
+                to={`/membros/${user.id}`}
+                aria-label={`Visualizar ${user.name}`}
+                title={`Visualizar ${user.name}`}
+              >
+                <Eye className="w-4 h-4" />
+                Visualizar
+              </Link>
             </Button>
           </ResponsiveRowContainer>
           <div className="w-full border-t-1 border-muted-foreground/10"></div>

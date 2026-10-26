@@ -201,7 +201,7 @@ export function NewUserPage() {
               </div>
             </CardContent>
             <Separator />
-            <div className="flex flex-wrap justify-end gap-4 p-4 sm:p-6 flex-col-reverse sm:flex-row">
+            <div className="flex flex-wrap justify-end gap-2 sm:gap-4 p-4 sm:p-6 flex-col-reverse sm:flex-row">
               <Button asChild variant="outline" className="h-11 px-5">
                 <Link to="/membros">Cancelar</Link>
               </Button>
