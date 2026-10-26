@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/components/table"
-import { StatusBadge } from "../components/StatusBadge"
+import { StatusBadge } from "@/shared/components/ui/StatusBadge"
 import type { User } from "../types"
 import { UserAvatar } from "./UserAvatar"
 

@@ -4,7 +4,7 @@ import { Button } from "@/shared/components/button"
 import { Card, CardContent } from "@/shared/components/card"
 import { Separator } from "@/shared/components/separator"
 import { Back } from "@/shared/components/ui/Back"
-import { StatusBadge } from "../components/StatusBadge"
+import { StatusBadge } from "@/shared/components/ui/StatusBadge"
 import { users } from "../data"
 import { UserAvatar } from "../components/UserAvatar"
 

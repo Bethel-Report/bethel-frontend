@@ -33,3 +33,6 @@ lerna-debug.log*
 # OS
 .DS_Store
 Thumbs.db
+
+# docs
+docs/
