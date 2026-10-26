@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Plus, Search } from "lucide-react"
+import { Link } from "react-router"
 import { normalizeSearchText } from "@/lib/utils"
 import { Button } from "@/shared/components/button"
 import { Input } from "@/shared/components/input"
@@ -48,9 +49,11 @@ export function BethelsPage() {
           </p>
         </div>
         <div className="flex w-full justify-end md:w-fit">
-          <Button type="button" className="h-auto px-4 py-3 text-md">
-            <Plus aria-hidden="true" />
-            Criar Bethel
+          <Button asChild className="h-auto px-4 py-3 text-md">
+            <Link to="/betheis/novo">
+              <Plus aria-hidden="true" />
+              Criar Bethel
+            </Link>
           </Button>
         </div>
       </div>

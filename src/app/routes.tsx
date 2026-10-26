@@ -21,6 +21,11 @@ const BethelsPage = lazy(() =>
     default: m.BethelsPage,
   })),
 )
+const NewBethelPage = lazy(() =>
+  import("@/features/bethels/pages/NewBethelPage").then((m) => ({
+    default: m.NewBethelPage,
+  })),
+)
 const NewUserPage = lazy(() =>
   import("@/features/users/pages/NewUserPage").then((m) => ({
     default: m.NewUserPage,
@@ -40,6 +45,7 @@ export function AppRoutes() {
           <Route element={<AppLayout />}>
             <Route index path="/" element={<HomePage />} />
             <Route path="/betheis" element={<BethelsPage />} />
+            <Route path="/betheis/novo" element={<NewBethelPage />} />
             <Route path="/membros" element={<UsersPage />} />
             <Route path="/membros/novo" element={<NewUserPage />} />
             <Route path="/membros/:id" element={<UserDetailsPage />} />
