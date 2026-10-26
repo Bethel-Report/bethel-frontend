@@ -16,6 +16,11 @@ const UsersPage = lazy(() =>
     default: m.UsersPage,
   })),
 )
+const NewUserPage = lazy(() =>
+  import("@/features/users/pages/NewUserPage").then((m) => ({
+    default: m.NewUserPage,
+  })),
+)
 
 export function AppRoutes() {
   return (
@@ -25,6 +30,7 @@ export function AppRoutes() {
           <Route element={<AppLayout />}>
             <Route index path="/" element={<HomePage />} />
             <Route path="/membros" element={<UsersPage />} />
+            <Route path="/membros/novo" element={<NewUserPage />} />
             <Route path="/login" element={null} />
           </Route>
           <Route path="/componentes" element={<ComponentsPage />} />

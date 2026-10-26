@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Plus, Search } from "lucide-react"
+import { Link } from "react-router"
 import { Button } from "@/shared/components/button"
 import { Input } from "@/shared/components/input"
 import {
@@ -122,9 +123,11 @@ export function UsersPage() {
           </p>
         </div>
         <div className="w-full md:w-fit flex justify-end">
-          <Button type="button" className="h-auto text-md px-4 py-3">
-            <Plus aria-hidden="true" />
-            Convidar usuário
+          <Button asChild className="h-auto text-md px-4 py-3">
+            <Link to="/membros/novo">
+              <Plus aria-hidden="true" />
+              Adicionar membro
+            </Link>
           </Button>
         </div>
       </div>
