@@ -60,6 +60,7 @@ export function AppLayout() {
     (pathname === "/membros/novo" ? "Adicionar membro" : undefined) ??
     (pathname.startsWith("/membros/") ? "Detalhes do membro" : undefined) ??
     (pathname === "/postagens/novo" ? "Criar postagem" : undefined) ??
+    (pathname.startsWith("/postagens/") ? "Detalhes da postagem" : undefined) ??
     navItems.find((n) => n.to === pathname)?.label ??
     (pathname === "/perfil"
       ? "Meu perfil"

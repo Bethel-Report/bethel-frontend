@@ -1,4 +1,5 @@
 import { Newspaper } from "lucide-react"
+import { Link } from "react-router"
 import { Avatar, AvatarFallback } from "@/shared/components/avatar"
 import { Badge } from "@/shared/components/badge"
 import type { Bethel, BethelPost } from "../data"
@@ -47,7 +48,12 @@ export function BethelPostItem({ post, bethel }: BethelPostItemProps) {
             </time>
           </div>
           <h3 className="mt-2 font-display text-lg font-bold leading-snug">
-            {post.title}
+            <Link
+              to={`/postagens/${post.id}`}
+              className="rounded-sm hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              {post.title}
+            </Link>
           </h3>
           <p className="mt-2 text-md leading-relaxed text-muted-foreground">
             {post.summary}
