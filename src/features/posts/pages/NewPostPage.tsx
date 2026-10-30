@@ -36,7 +36,7 @@ export function NewPostPage() {
       bethelId: "",
       category: "",
       publishedAt: "",
-      image: "",
+      thumbnail: [],
       attachments: [],
     },
   })
@@ -166,48 +166,56 @@ export function NewPostPage() {
                 />
               </div>
 
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <FormField
-                  control={form.control}
-                  name="publishedAt"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel className="text-md">
-                        Data da publicação{" "}
-                        <span className="text-destructive">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="date"
-                          className="h-11 bg-card shadow-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="image"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel className="text-md">
-                        URL da imagem (opcional)
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="url"
-                          placeholder="https://exemplo.com/imagem.jpg"
-                          className="h-11 bg-card shadow-none"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="publishedAt"
+                render={({ field }) => (
+                  <FormItem className="w-full sm:max-w-sm">
+                    <FormLabel className="text-md">
+                      Data da publicação{" "}
+                      <span className="text-destructive">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="date"
+                        className="h-11 bg-card shadow-none"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="thumbnail"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-md">
+                      Thumbnail (opcional)
+                    </FormLabel>
+                    <FormControl>
+                      <FileDropzone
+                        files={field.value}
+                        onFilesChange={field.onChange}
+                        name={field.name}
+                        ref={field.ref}
+                        onBlur={field.onBlur}
+                        accept="image/*"
+                        maxFiles={1}
+                        showImagePreview
+                        title={
+                          field.value.length > 0
+                            ? "Clique ou arraste para substituir a imagem"
+                            : "Arraste uma imagem aqui ou clique para selecionar"
+                        }
+                        hint="Selecione uma imagem para a capa da postagem."
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="attachments"

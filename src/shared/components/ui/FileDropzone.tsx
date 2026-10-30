@@ -1,5 +1,11 @@
 import { Paperclip, Upload, X } from "lucide-react"
-import { forwardRef, useRef, useState, type ComponentProps } from "react"
+import {
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+  type ComponentProps,
+} from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/shared/components/button"
 
@@ -9,14 +15,55 @@ type FileDropzoneProps = Omit<
 > & {
   files: File[]
   onFilesChange: (files: File[]) => void
+  maxFiles?: number
+  showImagePreview?: boolean
+  title?: string
+  hint?: string
+}
+
+function ImagePreview({ file }: { file: File }) {
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    const url = URL.createObjectURL(file)
+    if (imageRef.current) imageRef.current.src = url
+
+    return () => URL.revokeObjectURL(url)
+  }, [file])
+
+  return (
+    <img
+      ref={imageRef}
+      alt={`Prévia de ${file.name}`}
+      className="max-h-56 w-full rounded-md object-contain"
+    />
+  )
 }
 
 export const FileDropzone = forwardRef<HTMLInputElement, FileDropzoneProps>(
-  ({ files, onFilesChange, disabled, ...inputProps }, ref) => {
+  (
+    {
+      files,
+      onFilesChange,
+      maxFiles,
+      showImagePreview = false,
+      title = "Arraste arquivos aqui ou clique para selecionar",
+      hint = "Você pode adicionar vários arquivos.",
+      disabled,
+      ...inputProps
+    },
+    ref,
+  ) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const [isDragging, setIsDragging] = useState(false)
 
     function updateFiles(incoming: File[]) {
+      if (incoming.length === 0) return
+      if (maxFiles === 1) {
+        onFilesChange([incoming[0]])
+        return
+      }
+
       const next = [...files]
       for (const file of incoming) {
         if (
@@ -30,6 +77,7 @@ export const FileDropzone = forwardRef<HTMLInputElement, FileDropzoneProps>(
           next.push(file)
         }
       }
+      if (maxFiles && next.length > maxFiles) next.length = maxFiles
       if (next.length !== files.length) onFilesChange(next)
     }
 
@@ -38,7 +86,7 @@ export const FileDropzone = forwardRef<HTMLInputElement, FileDropzoneProps>(
         <input
           {...inputProps}
           type="file"
-          multiple
+          multiple={maxFiles !== 1}
           disabled={disabled}
           ref={(element) => {
             inputRef.current = element
@@ -80,18 +128,21 @@ export const FileDropzone = forwardRef<HTMLInputElement, FileDropzoneProps>(
             isDragging && "border-primary bg-secondary/60",
           )}
         >
-          <span className="flex size-12 items-center justify-center rounded-full bg-secondary text-primary">
-            <Upload aria-hidden="true" className="size-6" />
-          </span>
-          <span className="font-semibold">
-            Arraste arquivos aqui ou clique para selecionar
-          </span>
-          <span className="text-sm text-muted-foreground">
-            Você pode adicionar vários arquivos.
-          </span>
+          {showImagePreview && files[0]?.type.startsWith("image/") ? (
+            <ImagePreview
+              key={`${files[0].name}-${files[0].size}-${files[0].lastModified}`}
+              file={files[0]}
+            />
+          ) : (
+            <span className="flex size-12 items-center justify-center rounded-full bg-secondary text-primary">
+              <Upload aria-hidden="true" className="size-6" />
+            </span>
+          )}
+          <span className="font-semibold">{title}</span>
+          <span className="text-sm text-muted-foreground">{hint}</span>
         </button>
         {files.length > 0 && (
-          <ul className="space-y-2" aria-label="Anexos selecionados">
+          <ul className="space-y-2" aria-label="Arquivos selecionados">
             {files.map((file, index) => (
               <li
                 key={`${file.name}-${file.lastModified}-${index}`}
