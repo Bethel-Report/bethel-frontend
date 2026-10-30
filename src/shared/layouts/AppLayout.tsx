@@ -56,6 +56,7 @@ export function AppLayout() {
   const unread = notifications.filter((n) => !n.read).length
   const current =
     (pathname === "/betheis/novo" ? "Criar Bethel" : undefined) ??
+    (pathname.startsWith("/betheis/") ? "Detalhes do Bethel" : undefined) ??
     (pathname === "/membros/novo" ? "Adicionar membro" : undefined) ??
     (pathname.startsWith("/membros/") ? "Detalhes do membro" : undefined) ??
     navItems.find((n) => n.to === pathname)?.label ??

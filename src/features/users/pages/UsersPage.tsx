@@ -68,7 +68,7 @@ export function UsersPage() {
           <Input
             aria-label="Buscar usuários por nome"
             className="h-11 bg-card pl-9 shadow-none"
-            placeholder="Buscar nome"
+            placeholder="Buscar usuário"
             value={query}
             onChange={(event) => {
               setQuery(event.target.value)

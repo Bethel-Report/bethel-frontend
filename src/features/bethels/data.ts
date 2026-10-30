@@ -1,3 +1,5 @@
+import bookDonationImage from "@/assets/book-donation.png"
+
 export type Bethel = {
   id: number
   name: string
@@ -71,5 +73,53 @@ export const bethels: Bethel[] = [
     state: "CE",
     members: 17,
     status: "Ativo",
+  },
+]
+
+export type BethelPost = {
+  id: number
+  bethelId: number
+  title: string
+  summary: string
+  publishedAt: string
+  category: string
+  image?: string
+}
+
+export const bethelPosts: BethelPost[] = [
+  {
+    id: 1,
+    bethelId: 1,
+    title: "Juntas, fazemos a diferença",
+    summary:
+      "O Bethel nº 01 realizou uma ação de arrecadação de livros para a comunidade. Um dia de união, cuidado e solidariedade.",
+    publishedAt: "2026-10-12",
+    category: "Atividade",
+    image: bookDonationImage,
+  },
+  {
+    id: 2,
+    bethelId: 1,
+    title: "Campanha de arrecadação de alimentos",
+    summary: "A unidade reuniu doações para apoiar famílias da comunidade.",
+    publishedAt: "2026-09-28",
+    category: "Campanha",
+  },
+  {
+    id: 3,
+    bethelId: 1,
+    title: "Reunião mensal de atividades",
+    summary: "Confira um resumo das ações e dos próximos encontros do Bethel.",
+    publishedAt: "2026-09-12",
+    category: "Encontro",
+  },
+  {
+    id: 4,
+    bethelId: 2,
+    title: "Ação comunitária em Caucaia",
+    summary:
+      "Integrantes do Bethel participaram de uma atividade com a comunidade.",
+    publishedAt: "2026-10-05",
+    category: "Atividade",
   },
 ]
