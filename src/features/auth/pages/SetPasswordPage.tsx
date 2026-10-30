@@ -59,6 +59,7 @@ export function SetPasswordPage() {
                       type="password"
                       autoComplete="new-password"
                       className="h-12 text-lg"
+                      placeholder="********"
                       {...field}
                     />
                   </FormControl>
@@ -78,6 +79,7 @@ export function SetPasswordPage() {
                       type="password"
                       autoComplete="new-password"
                       className="h-12 text-lg"
+                      placeholder="********"
                       {...field}
                     />
                   </FormControl>
