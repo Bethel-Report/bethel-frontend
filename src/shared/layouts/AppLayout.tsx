@@ -59,6 +59,7 @@ export function AppLayout() {
     (pathname.startsWith("/betheis/") ? "Detalhes do Bethel" : undefined) ??
     (pathname === "/membros/novo" ? "Adicionar membro" : undefined) ??
     (pathname.startsWith("/membros/") ? "Detalhes do membro" : undefined) ??
+    (pathname === "/postagens/novo" ? "Criar postagem" : undefined) ??
     navItems.find((n) => n.to === pathname)?.label ??
     (pathname === "/perfil"
       ? "Meu perfil"
@@ -77,7 +78,9 @@ export function AppLayout() {
             ? "/membros"
             : pathname.startsWith("/betheis/")
               ? "/betheis"
-              : pathname
+              : pathname.startsWith("/postagens/")
+                ? "/postagens"
+                : pathname
         }
         unread={unread}
         navItems={navItems}

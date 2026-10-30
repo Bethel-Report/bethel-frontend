@@ -1,7 +1,9 @@
 import { useState } from "react"
-import { Search } from "lucide-react"
+import { Plus, Search } from "lucide-react"
+import { Link } from "react-router"
 import { normalizeSearchText } from "@/lib/utils"
 import { bethelPosts, bethels } from "@/features/bethels/data"
+import { Button } from "@/shared/components/button"
 import { Input } from "@/shared/components/input"
 import {
   Select,
@@ -27,7 +29,6 @@ export function PostsPage() {
   const [query, setQuery] = useState("")
   const [category, setCategory] = useState("all")
   const [page, setPage] = useState(1)
-
   const search = normalizeSearchText(query.trim())
   const filteredPosts = postsWithBethel.filter(
     ({ post, bethel }) =>
@@ -44,16 +45,26 @@ export function PostsPage() {
 
   return (
     <section aria-labelledby="posts-title" className="w-full max-w-[1280px]">
-      <div>
-        <h1
-          id="posts-title"
-          className="font-display text-[20px] font-bold leading-tight tracking-[-0.02em]"
-        >
-          Postagens
-        </h1>
-        <p className="mt-1.5 text-lg text-muted-foreground">
-          Acompanhe as publicações e atividades dos bethéis em um só lugar.
-        </p>
+      <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
+        <div>
+          <h1
+            id="posts-title"
+            className="font-display text-[20px] font-bold leading-tight tracking-[-0.02em]"
+          >
+            Postagens
+          </h1>
+          <p className="mt-1.5 text-lg text-muted-foreground">
+            Acompanhe as publicações e atividades dos bethéis em um só lugar.
+          </p>
+        </div>
+        <div className="flex w-full justify-end md:w-fit">
+          <Button asChild className="h-auto px-4 py-3 text-md">
+            <Link to="/postagens/novo">
+              <Plus aria-hidden="true" />
+              Criar postagem
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <div className="mt-7 flex flex-wrap items-center justify-between gap-3 md:mt-8">
