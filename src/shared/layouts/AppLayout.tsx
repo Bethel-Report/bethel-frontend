@@ -6,11 +6,9 @@ import {
   FileText,
   ClipboardList,
   Wallet,
-  Vote,
   FolderOpen,
-  Bell,
 } from "lucide-react"
-import { Outlet, useLocation } from "react-router"
+import { matchPath, Outlet, useLocation } from "react-router"
 import { Footer } from "@/app/components/Footer"
 import { Main } from "@/app/components/Main"
 import { Header } from "@/app/components/Header"
@@ -30,43 +28,39 @@ const navItems = [
   },
   { to: "/formularios", label: "Formulários", icon: ClipboardList, group: "" },
   { to: "/financas", label: "Finanças", icon: Wallet, group: "" },
-  { to: "/eleicoes", label: "Eleições", icon: Vote, group: "" },
   {
     to: "/materiais",
     label: "Materiais e documentos",
     icon: FolderOpen,
     group: "ORGANIZAÇÃO",
   },
-  { to: "/notificacoes", label: "Notificações", icon: Bell, group: "" },
+]
+
+const pageRoutes = [
+  { path: "/betheis/novo", title: "Criar Bethel", navPath: "/betheis" },
+  { path: "/betheis/:id", title: "Detalhes do Bethel", navPath: "/betheis" },
+  { path: "/membros/novo", title: "Adicionar membro", navPath: "/membros" },
+  { path: "/membros/:id", title: "Detalhes do membro", navPath: "/membros" },
+  { path: "/postagens/novo", title: "Criar postagem", navPath: "/postagens" },
+  {
+    path: "/postagens/:id",
+    title: "Detalhes da postagem",
+    navPath: "/postagens",
+  },
+  { path: "/perfil", title: "Meu perfil" },
+  { path: "/consolidado", title: "Relatório consolidado" },
 ]
 
 export function AppLayout() {
   const { pathname } = useLocation()
   const profile = "Grande Conselho"
-  const notifications = [
-    {
-      id: 1,
-      title: "Notificação 1",
-      text: "Nova notificação",
-      date: "2026-10-01",
-      read: false,
-    },
-  ]
   const isMember = profile.startsWith("Membro")
-  const unread = notifications.filter((n) => !n.read).length
+  const pageRoute = pageRoutes.find(({ path }) => matchPath(path, pathname))
   const current =
-    (pathname === "/betheis/novo" ? "Criar Bethel" : undefined) ??
-    (pathname.startsWith("/betheis/") ? "Detalhes do Bethel" : undefined) ??
-    (pathname === "/membros/novo" ? "Adicionar membro" : undefined) ??
-    (pathname.startsWith("/membros/") ? "Detalhes do membro" : undefined) ??
-    (pathname === "/postagens/novo" ? "Criar postagem" : undefined) ??
-    (pathname.startsWith("/postagens/") ? "Detalhes da postagem" : undefined) ??
-    navItems.find((n) => n.to === pathname)?.label ??
-    (pathname === "/perfil"
-      ? "Meu perfil"
-      : pathname === "/consolidado"
-        ? "Relatório consolidado"
-        : "Bethel Report")
+    pageRoute?.title ??
+    navItems.find((item) => item.to === pathname)?.label ??
+    "Bethel Report"
+  const navPathname = pageRoute?.navPath ?? pathname
 
   if (pathname === "/acesso") return <Outlet />
 
@@ -74,21 +68,12 @@ export function AppLayout() {
     <SidebarProvider mobileBreakpoint={1024}>
       <Navbar
         profile={profile}
-        pathname={
-          pathname.startsWith("/membros/")
-            ? "/membros"
-            : pathname.startsWith("/betheis/")
-              ? "/betheis"
-              : pathname.startsWith("/postagens/")
-                ? "/postagens"
-                : pathname
-        }
-        unread={unread}
+        pathname={navPathname}
         navItems={navItems}
         isMember={isMember}
       />
       <div className="flex min-w-0 flex-1 flex-col">
-        <Header current={current} unread={unread} />
+        <Header current={current} />
         <Main>
           <Outlet />
         </Main>
