@@ -16,6 +16,11 @@ const LoginPage = lazy(() =>
     default: m.LoginPage,
   })),
 )
+const SetPasswordPage = lazy(() =>
+  import("@/features/auth/pages/SetPasswordPage").then((m) => ({
+    default: m.SetPasswordPage,
+  })),
+)
 
 export function AppRoutes() {
   return (
@@ -23,6 +28,7 @@ export function AppRoutes() {
       <Suspense fallback={null}>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/definir-senha" element={<SetPasswordPage />} />
           <Route path="/componentes" element={<ComponentsPage />} />
           <Route element={<AppLayout />}>
             <Route index path="/" element={<HomePage />} />
