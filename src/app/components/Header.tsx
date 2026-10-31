@@ -1,15 +1,22 @@
 import { Button } from "@/shared/components/button"
 import { useSidebar } from "@/shared/components/sidebar"
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/shared/components/dropdown-menu"
+import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/shared/components/breadcrumb"
-import { Menu } from "lucide-react"
+import { LogOut, Menu } from "lucide-react"
 import { Link } from "react-router"
 import { UserAvatar } from "@/features/users/components/UserAvatar"
+import "./Header.css"
 
 type HeaderProps = {
   current: string
@@ -40,9 +47,21 @@ export function Header({ current }: HeaderProps) {
         </Breadcrumb>
       </div>
       <div className="flex shrink-0 items-center gap-3 sm:gap-5">
-        <Link to="/perfil" aria-label="Meu perfil">
-          <UserAvatar name={"Mariana"} />
-        </Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="hover:bg-transparent" asChild>
+            <Button variant="ghost" size="icon" aria-label="Menu do usuário">
+              <UserAvatar name={"Mariana"} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="user-menu-content p-0" align="end">
+            <DropdownMenuItem className="cursor-pointer py-2 px-4" asChild>
+              <Link to="/login">
+                <LogOut aria-hidden="true" />
+                Sair
+              </Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   )
