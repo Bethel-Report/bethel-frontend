@@ -11,20 +11,22 @@ import {
 } from "@/shared/components/select"
 import { PageIndicator } from "@/shared/components/ui/PageIndicator"
 import { Pagination } from "@/shared/components/ui/Pagination"
+import { CreateTransactionDialog } from "../components/CreateTransactionDialog"
 import { SummaryCard } from "../components/SummaryCard"
 import { FinancesList } from "../components/FinancesList"
 import { FinancesTable } from "../components/FinancesTable"
-import { transactions } from "../data"
+import { transactions, type Transaction } from "../data"
 
 const pageSize = 5
 
 export function FinancesPage() {
+  const [financeTransactions, setFinanceTransactions] = useState(transactions)
   const [query, setQuery] = useState("")
   const [type, setType] = useState("all")
   const [page, setPage] = useState(1)
 
   const search = normalizeSearchText(query.trim())
-  const filteredTransactions = transactions.filter(
+  const filteredTransactions = financeTransactions.filter(
     (transaction) =>
       (type === "all" || transaction.type === type) &&
       (!search ||
@@ -43,10 +45,10 @@ export function FinancesPage() {
     firstItem + pageSize,
   )
 
-  const income = transactions
+  const income = financeTransactions
     .filter((item) => item.type === "Receita")
     .reduce((total, item) => total + item.amountInCents, 0)
-  const expenses = transactions
+  const expenses = financeTransactions
     .filter((item) => item.type === "Despesa")
     .reduce((total, item) => total + item.amountInCents, 0)
 
@@ -64,19 +66,37 @@ export function FinancesPage() {
     },
   ]
 
+  function handleCreate(transaction: Omit<Transaction, "id">) {
+    setFinanceTransactions((current) => [
+      {
+        ...transaction,
+        id: Math.max(0, ...current.map((item) => item.id)) + 1,
+      },
+      ...current,
+    ])
+    setQuery("")
+    setType("all")
+    setPage(1)
+  }
+
   return (
     <section aria-labelledby="finances-title" className="w-full max-w-[1280px]">
-      <div>
-        <h1
-          id="finances-title"
-          className="font-display text-[20px] font-bold leading-tight tracking-[-0.02em]"
-        >
-          Finanças
-        </h1>
-        <p className="mt-1.5 text-lg text-muted-foreground">
-          Acompanhe receitas, despesas e movimentações dos bethéis em um só
-          lugar.
-        </p>
+      <div className="flex flex-col items-start justify-between gap-4 md:flex-row">
+        <div>
+          <h1
+            id="finances-title"
+            className="font-display text-[20px] font-bold leading-tight tracking-[-0.02em]"
+          >
+            Finanças
+          </h1>
+          <p className="mt-1.5 text-lg text-muted-foreground">
+            Acompanhe receitas, despesas e movimentações dos bethéis em um só
+            lugar.
+          </p>
+        </div>
+        <div className="flex w-full justify-end md:w-fit">
+          <CreateTransactionDialog onCreate={handleCreate} />
+        </div>
       </div>
 
       <div className="mt-7 grid gap-4 sm:grid-cols-3 md:mt-8">
