@@ -7,7 +7,7 @@ export function Brand() {
         <img src={Logo} width={36} height={36} alt="Logo do Bethel Report" />
       </div>
       <span className="font-display text-xg font-extrabold">
-        bethel<span className="font-medium text-primary"> report</span>
+        Bethel<span className="font-medium text-primary"> Report</span>
       </span>
     </div>
   )
