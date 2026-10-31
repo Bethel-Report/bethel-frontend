@@ -1,6 +1,5 @@
 import { Button } from "@/shared/components/button"
 import { useSidebar } from "@/shared/components/sidebar"
-import { Avatar, AvatarFallback } from "@/shared/components/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +16,7 @@ import {
 } from "@/shared/components/breadcrumb"
 import { Bell, LogOut, Menu } from "lucide-react"
 import { Link } from "react-router"
+import { UserAvatar } from "@/features/users/components/UserAvatar"
 import "./Header.css"
 
 type HeaderProps = {
@@ -69,11 +69,7 @@ export function Header({ current, unread }: HeaderProps) {
         <DropdownMenu>
           <DropdownMenuTrigger className="hover:bg-transparent" asChild>
             <Button variant="ghost" size="icon" aria-label="Menu do usuário">
-              <Avatar className="size-8">
-                <AvatarFallback className="bg-secondary text-xs font-semibold text-primary">
-                  MC
-                </AvatarFallback>
-              </Avatar>
+              <UserAvatar name={"Mariana"} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="user-menu-content p-0" align="end">

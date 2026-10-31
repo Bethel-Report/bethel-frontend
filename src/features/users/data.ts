@@ -1,0 +1,68 @@
+import type { User } from "./types"
+
+export const users: User[] = [
+  {
+    id: 1,
+    name: "Mariana Costa",
+    email: "membro1@example.com",
+    role: "Conselho de Bethel",
+    bethel: "Bethel nº 01",
+    status: "Ativo",
+  },
+  {
+    id: 2,
+    name: "Beatriz Almeida",
+    email: "membro2@example.com",
+    role: "Conselho de Bethel",
+    bethel: "Bethel nº 02",
+    status: "Ativo",
+  },
+  {
+    id: 3,
+    name: "Camila Santos",
+    email: "membro3@example.com",
+    role: "Conselho de Bethel",
+    bethel: "Bethel nº 03",
+    status: "Ativo",
+  },
+  {
+    id: 4,
+    name: "Isabela Lima",
+    email: "membro4@example.com",
+    role: "Conselho de Bethel",
+    bethel: "Bethel nº 04",
+    status: "Ativo",
+  },
+  {
+    id: 5,
+    name: "Ana Oliveira",
+    email: "membro5@example.com",
+    role: "Conselho de Bethel",
+    bethel: "Bethel nº 05",
+    status: "Ativo",
+  },
+  {
+    id: 6,
+    name: "Larissa Ferreira",
+    email: "membro6@example.com",
+    role: "Conselho de Bethel",
+    bethel: "Bethel nº 06",
+    status: "Pendente",
+  },
+  {
+    id: 7,
+    name: "Juliana Martins",
+    email: "membro7@example.com",
+    role: "Conselho de Bethel",
+    bethel: "Bethel nº 07",
+    status: "Inativo",
+  },
+  {
+    id: 8,
+    name: "Rafaela Souza",
+    email: "membro8@example.com",
+    role: "Conselho de Bethel",
+    bethel: "Bethel nº 08",
+    status: "Ativo",
+  },
+]
