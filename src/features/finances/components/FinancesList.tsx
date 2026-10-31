@@ -8,16 +8,20 @@ import {
   ResponsiveRowTitle,
 } from "@/shared/components/responsive-row"
 import type { Transaction } from "../data"
+import type { NewTransactionFormValues } from "../schemas"
 import { TypeLabel } from "./TypeLabel"
+import { TransactionActions } from "./TransactionActions"
 import React from "react"
 import { Banknote, Calendar } from "lucide-react"
 import { formatAmount, formatDate } from "../format"
 
 type FinancesListProps = {
   items: Transaction[]
+  onEdit: (id: number, values: NewTransactionFormValues) => void
+  onRemove: (id: number) => void
 }
 
-export function FinancesList({ items }: FinancesListProps) {
+export function FinancesList({ items, onEdit, onRemove }: FinancesListProps) {
   return (
     <ResponsiveRowList>
       {items.map((transaction) => (
@@ -42,6 +46,12 @@ export function FinancesList({ items }: FinancesListProps) {
                 </p>
               </ResponsiveRowHighlightDetail>
             </ResponsiveRowHighlight>
+            <TransactionActions
+              transaction={transaction}
+              onEdit={onEdit}
+              onRemove={onRemove}
+              showLabels
+            />
           </ResponsiveRowContainer>
           <div className="w-full border-t-1 border-muted-foreground/10"></div>
         </React.Fragment>

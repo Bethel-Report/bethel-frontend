@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Plus, Wallet } from "lucide-react"
+import { Pencil, Plus, Wallet } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { bethels } from "@/features/bethels/data"
@@ -33,46 +33,71 @@ import {
 import type { Transaction } from "../data"
 import { newTransactionSchema, type NewTransactionFormValues } from "../schemas"
 
-type CreateTransactionDialogProps = {
-  onCreate: (transaction: Omit<Transaction, "id">) => void
+type TransactionDialogProps = {
+  transaction?: Transaction
+  onSave: (values: NewTransactionFormValues) => void
+  showLabel?: boolean
 }
 
-export function CreateTransactionDialog({
-  onCreate,
-}: CreateTransactionDialogProps) {
+function formValues(
+  transaction?: Transaction,
+): Partial<NewTransactionFormValues> {
+  return transaction
+    ? {
+        description: transaction.description,
+        bethel: transaction.bethel,
+        type: transaction.type,
+        amount: (transaction.amountInCents / 100).toFixed(2).replace(".", ","),
+      }
+    : { description: "", bethel: "", amount: "" }
+}
+
+export function TransactionDialog({
+  transaction,
+  onSave,
+  showLabel = false,
+}: TransactionDialogProps) {
   const [open, setOpen] = useState(false)
   const form = useForm<NewTransactionFormValues>({
     resolver: zodResolver(newTransactionSchema),
-    defaultValues: {
-      description: "",
-      bethel: "",
-      amount: "",
-    },
+    defaultValues: formValues(transaction),
   })
 
   function handleOpenChange(nextOpen: boolean) {
     setOpen(nextOpen)
-    if (!nextOpen) form.reset()
+    form.reset(formValues(transaction))
   }
 
   function handleSubmit(values: NewTransactionFormValues) {
-    onCreate({
-      description: values.description,
-      bethel: values.bethel,
-      dateTime: new Date().toISOString(),
-      type: values.type,
-      amountInCents: Math.round(Number(values.amount.replace(",", ".")) * 100),
-    })
+    onSave(values)
     handleOpenChange(false)
   }
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button className="h-auto px-4 py-3 text-md">
-          <Plus aria-hidden="true" />
-          Criar movimentação
-        </Button>
+        {transaction ? (
+          <Button
+            type="button"
+            variant="ghost"
+            size={showLabel ? "default" : "icon"}
+            className={
+              showLabel
+                ? "h-12 flex-1 border border-muted-foreground/10 bg-muted-foreground/5 text-lg"
+                : "border border-muted-foreground/10"
+            }
+            aria-label={`Editar ${transaction.description}`}
+            title={`Editar ${transaction.description}`}
+          >
+            <Pencil aria-hidden="true" />
+            {showLabel && "Editar"}
+          </Button>
+        ) : (
+          <Button className="h-auto px-4 py-3 text-md">
+            <Plus aria-hidden="true" />
+            Criar movimentação
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl gap-0 overflow-y-auto border-border bg-card p-0 rounded-lg">
         <DialogHeader className="p-4 pr-12 sm:p-6 sm:pr-12">
@@ -82,10 +107,12 @@ export function CreateTransactionDialog({
             </div>
             <div>
               <DialogTitle className="font-display text-lg font-bold leading-tight tracking-[-0.02em]">
-                Criar movimentação
+                {transaction ? "Editar movimentação" : "Criar movimentação"}
               </DialogTitle>
               <DialogDescription className="mt-1 text-md text-muted-foreground">
-                Informe os dados da nova movimentação financeira.
+                {transaction
+                  ? "Atualize os dados da movimentação financeira."
+                  : "Informe os dados da nova movimentação financeira."}
               </DialogDescription>
             </div>
           </div>
@@ -196,7 +223,7 @@ export function CreateTransactionDialog({
                 </Button>
               </DialogClose>
               <Button type="submit" className="h-11 px-5">
-                Cadastrar movimentação
+                {transaction ? "Salvar alterações" : "Cadastrar movimentação"}
               </Button>
             </div>
           </form>

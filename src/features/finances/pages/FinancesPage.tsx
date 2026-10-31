@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Search } from "lucide-react"
+import { ArrowDownRight, ArrowUpRight, Search, Wallet } from "lucide-react"
 import { normalizeSearchText } from "@/lib/utils"
 import { Input } from "@/shared/components/input"
 import {
@@ -11,13 +11,18 @@ import {
 } from "@/shared/components/select"
 import { PageIndicator } from "@/shared/components/ui/PageIndicator"
 import { Pagination } from "@/shared/components/ui/Pagination"
-import { CreateTransactionDialog } from "../components/CreateTransactionDialog"
+import { TransactionDialog } from "../components/TransactionDialog"
 import { SummaryCard } from "../components/SummaryCard"
 import { FinancesList } from "../components/FinancesList"
 import { FinancesTable } from "../components/FinancesTable"
-import { transactions, type Transaction } from "../data"
+import { transactions } from "../data"
+import type { NewTransactionFormValues } from "../schemas"
 
 const pageSize = 5
+
+function amountInCents(value: string) {
+  return Math.round(Number(value.replace(",", ".")) * 100)
+}
 
 export function FinancesPage() {
   const [financeTransactions, setFinanceTransactions] = useState(transactions)
@@ -53,23 +58,37 @@ export function FinancesPage() {
     .reduce((total, item) => total + item.amountInCents, 0)
 
   const cards = [
-    { label: "Total de receitas", value: income, color: "text-success" },
+    {
+      label: "Total de receitas",
+      value: income,
+      color: "text-success",
+      icon: ArrowUpRight,
+      iconClassName: "bg-success-foreground text-success",
+    },
     {
       label: "Total de despesas",
       value: expenses,
       color: "text-destructive",
+      icon: ArrowDownRight,
+      iconClassName: "bg-destructive/10 text-destructive",
     },
     {
       label: "Saldo",
       value: income - expenses,
       color: "text-foreground",
+      icon: Wallet,
+      iconClassName: "bg-secondary text-primary",
     },
   ]
 
-  function handleCreate(transaction: Omit<Transaction, "id">) {
+  function handleCreate(values: NewTransactionFormValues) {
     setFinanceTransactions((current) => [
       {
-        ...transaction,
+        description: values.description,
+        bethel: values.bethel,
+        dateTime: new Date().toISOString(),
+        type: values.type,
+        amountInCents: amountInCents(values.amount),
         id: Math.max(0, ...current.map((item) => item.id)) + 1,
       },
       ...current,
@@ -77,6 +96,28 @@ export function FinancesPage() {
     setQuery("")
     setType("all")
     setPage(1)
+  }
+
+  function handleEdit(id: number, values: NewTransactionFormValues) {
+    setFinanceTransactions((current) =>
+      current.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              description: values.description,
+              bethel: values.bethel,
+              type: values.type,
+              amountInCents: amountInCents(values.amount),
+            }
+          : item,
+      ),
+    )
+  }
+
+  function handleRemove(id: number) {
+    setFinanceTransactions((current) =>
+      current.filter((item) => item.id !== id),
+    )
   }
 
   return (
@@ -95,7 +136,7 @@ export function FinancesPage() {
           </p>
         </div>
         <div className="flex w-full justify-end md:w-fit">
-          <CreateTransactionDialog onCreate={handleCreate} />
+          <TransactionDialog onSave={handleCreate} />
         </div>
       </div>
 
@@ -106,6 +147,8 @@ export function FinancesPage() {
             label={card.label}
             color={card.color}
             value={card.value}
+            icon={card.icon}
+            iconClassName={card.iconClassName}
           />
         ))}
       </div>
@@ -155,10 +198,18 @@ export function FinancesPage() {
 
       <div className="mt-5 overflow-hidden rounded-lg border border-border bg-card shadow-sm">
         <div className="hidden md:block">
-          <FinancesTable items={visibleTransactions} />
+          <FinancesTable
+            items={visibleTransactions}
+            onEdit={handleEdit}
+            onRemove={handleRemove}
+          />
         </div>
         <div className="md:hidden">
-          <FinancesList items={visibleTransactions} />
+          <FinancesList
+            items={visibleTransactions}
+            onEdit={handleEdit}
+            onRemove={handleRemove}
+          />
         </div>
         <div className="flex min-h-[60px] items-center justify-between gap-3 border-t border-border px-5 text-md text-muted-foreground">
           <PageIndicator
