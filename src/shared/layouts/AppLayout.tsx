@@ -3,7 +3,6 @@ import {
   Landmark,
   Users,
   Newspaper,
-  FileText,
   ClipboardList,
   Wallet,
   FolderOpen,
@@ -21,12 +20,11 @@ const navItems = [
   { to: "/membros", label: "Usuários e membros", icon: Users, group: "" },
   { to: "/postagens", label: "Postagens", icon: Newspaper, group: "" },
   {
-    to: "/relatorios",
-    label: "Relatórios anuais",
-    icon: FileText,
+    to: "/formularios",
+    label: "Formulários",
+    icon: ClipboardList,
     group: "GESTÃO",
   },
-  { to: "/formularios", label: "Formulários", icon: ClipboardList, group: "" },
   { to: "/financas", label: "Finanças", icon: Wallet, group: "" },
   {
     to: "/materiais",
