@@ -5,15 +5,17 @@ type PaginationProps = {
   currentPage: number
   totalPages: number
   setPage: (page: number) => void
+  ariaLabel?: string
 }
 
 export function Pagination({
   currentPage,
   totalPages,
   setPage,
+  ariaLabel = "Paginação",
 }: PaginationProps) {
   return (
-    <nav aria-label="Paginação de usuários" className="flex items-center gap-1">
+    <nav aria-label={ariaLabel} className="flex items-center gap-1">
       <Button
         type="button"
         variant="ghost"

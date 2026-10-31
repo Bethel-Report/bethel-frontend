@@ -1,6 +1,6 @@
 import { Eye, Landmark } from "lucide-react"
 import type { User } from "../types"
-import { StatusBadge } from "./StatusBadge"
+import { StatusBadge } from "@/shared/components/ui/StatusBadge"
 import { Button } from "@/shared/components/button"
 import React from "react"
 import { Link } from "react-router"

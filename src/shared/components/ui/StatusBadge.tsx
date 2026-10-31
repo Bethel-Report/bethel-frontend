@@ -1,7 +1,8 @@
 import { Badge } from "@/shared/components/badge"
-import type { UserStatus } from "../types"
 
-const STATUS_BADGE_MAP: Record<UserStatus, string> = {
+type Status = "Ativo" | "Pendente" | "Inativo"
+
+const STATUS_BADGE_MAP: Record<Status, string> = {
   Ativo:
     "bg-success-foreground text-success shadow-none hover:bg-success-foreground",
   Pendente:
@@ -10,15 +11,15 @@ const STATUS_BADGE_MAP: Record<UserStatus, string> = {
 }
 
 type StatusBadgeProps = {
-  status: UserStatus
+  status: Status
 }
 
 export function StatusBadge({ status }: StatusBadgeProps) {
   return (
     <Badge
-      className={`w-fit gap-1.5 flex justify-center items-center border-0 text-sm ${STATUS_BADGE_MAP[status]}`}
+      className={`flex w-fit items-center justify-center gap-1.5 border-0 text-sm ${STATUS_BADGE_MAP[status]}`}
     >
-      <span aria-hidden="true" className="m size-1.5 rounded-full bg-current" />
+      <span aria-hidden="true" className="size-1.5 rounded-full bg-current" />
       {status}
     </Badge>
   )

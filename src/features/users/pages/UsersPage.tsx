@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Plus, Search } from "lucide-react"
 import { Link } from "react-router"
+import { normalizeSearchText } from "@/lib/utils"
 import { Button } from "@/shared/components/button"
 import { Input } from "@/shared/components/input"
 import {
@@ -18,25 +19,18 @@ import { users } from "../data"
 
 const pageSize = 5
 
-function normalize(value: string) {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-}
-
 export function UsersPage() {
   const [query, setQuery] = useState("")
   const [status, setStatus] = useState("all")
   const [page, setPage] = useState(1)
 
-  const search = normalize(query.trim())
+  const search = normalizeSearchText(query.trim())
   const filteredUsers = users.filter(
     (user) =>
       (status === "all" || user.status === status) &&
       (!search ||
         [user.name, user.email, user.bethel].some((value) =>
-          normalize(value).includes(search),
+          normalizeSearchText(value).includes(search),
         )),
   )
   const totalPages = Math.max(1, Math.ceil(filteredUsers.length / pageSize))
@@ -74,7 +68,7 @@ export function UsersPage() {
           <Input
             aria-label="Buscar usuários por nome"
             className="h-11 bg-card pl-9 shadow-none"
-            placeholder="Buscar nome"
+            placeholder="Buscar usuário"
             value={query}
             onChange={(event) => {
               setQuery(event.target.value)

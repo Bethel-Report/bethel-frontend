@@ -55,6 +55,8 @@ export function AppLayout() {
   const isMember = profile.startsWith("Membro")
   const unread = notifications.filter((n) => !n.read).length
   const current =
+    (pathname === "/betheis/novo" ? "Criar Bethel" : undefined) ??
+    (pathname.startsWith("/betheis/") ? "Detalhes do Bethel" : undefined) ??
     (pathname === "/membros/novo" ? "Adicionar membro" : undefined) ??
     (pathname.startsWith("/membros/") ? "Detalhes do membro" : undefined) ??
     navItems.find((n) => n.to === pathname)?.label ??
@@ -70,7 +72,13 @@ export function AppLayout() {
     <SidebarProvider mobileBreakpoint={1024}>
       <Navbar
         profile={profile}
-        pathname={pathname.startsWith("/membros/") ? "/membros" : pathname}
+        pathname={
+          pathname.startsWith("/membros/")
+            ? "/membros"
+            : pathname.startsWith("/betheis/")
+              ? "/betheis"
+              : pathname
+        }
         unread={unread}
         navItems={navItems}
         isMember={isMember}
