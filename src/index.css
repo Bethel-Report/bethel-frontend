@@ -93,3 +93,70 @@
     font-family: var(--font-display);
   }
 }
+
+/* Shared motion for Radix menus, selects and other floating content. */
+.popup-content[data-state="open"] {
+  animation: popup-enter 180ms ease-out both;
+}
+
+.popup-content[data-state="closed"] {
+  animation: popup-exit 140ms ease-in both;
+}
+
+.popup-content[data-side="top"] {
+  --popup-offset-x: 0px;
+  --popup-offset-y: 6px;
+}
+
+.popup-content[data-side="bottom"] {
+  --popup-offset-x: 0px;
+  --popup-offset-y: -6px;
+}
+
+.popup-content[data-side="left"] {
+  --popup-offset-x: 6px;
+  --popup-offset-y: 0px;
+}
+
+.popup-content[data-side="right"] {
+  --popup-offset-x: -6px;
+  --popup-offset-y: 0px;
+}
+
+@keyframes popup-enter {
+  from {
+    opacity: 0;
+    transform: translate(
+        var(--popup-offset-x, 0px),
+        var(--popup-offset-y, -6px)
+      )
+      scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes popup-exit {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(
+        calc(var(--popup-offset-x, 0px) * 0.667),
+        calc(var(--popup-offset-y, -6px) * 0.667)
+      )
+      scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popup-content[data-state] {
+    animation: none;
+  }
+}
