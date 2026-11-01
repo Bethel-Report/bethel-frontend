@@ -16,6 +16,11 @@ const UsersPage = lazy(() =>
     default: m.UsersPage,
   })),
 )
+const FinancesPage = lazy(() =>
+  import("@/features/finances/pages/FinancesPage").then((m) => ({
+    default: m.FinancesPage,
+  })),
+)
 const BethelsPage = lazy(() =>
   import("@/features/bethels/pages/BethelsPage").then((m) => ({
     default: m.BethelsPage,
@@ -84,6 +89,7 @@ export function AppRoutes() {
             <Route path="/postagens/:id" element={<PostDetailsPage />} />
             <Route path="/postagens/novo" element={<NewPostPage />} />
             <Route path="/membros" element={<UsersPage />} />
+            <Route path="/financas" element={<FinancesPage />} />
             <Route path="/membros/:id" element={<UserDetailsPage />} />
             <Route path="/membros/novo" element={<NewUserPage />} />
           </Route>
