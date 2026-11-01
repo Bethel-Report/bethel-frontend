@@ -166,9 +166,11 @@ export function FormDetailsPage() {
               <Pencil aria-hidden="true" className="size-5" />
               Editar formulário
             </Button>
-            <Button type="button" className="h-11 px-5">
-              <ListTree aria-hidden="true" className="size-5" />
-              Editar estrutura
+            <Button asChild className="h-11 px-5">
+              <Link to={`/formularios/${form.id}/estrutura`}>
+                <ListTree aria-hidden="true" className="size-5" />
+                Editar estrutura
+              </Link>
             </Button>
           </div>
         </Card>

@@ -40,6 +40,11 @@ const pageRoutes = [
   { path: "/membros/novo", title: "Adicionar membro", navPath: "/membros" },
   { path: "/membros/:id", title: "Detalhes do membro", navPath: "/membros" },
   {
+    path: "/formularios/:id/estrutura",
+    title: "Editar estrutura",
+    navPath: "/formularios",
+  },
+  {
     path: "/formularios/:id",
     title: "Detalhes do formulário",
     navPath: "/formularios",
