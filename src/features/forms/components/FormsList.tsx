@@ -1,4 +1,6 @@
-import { CalendarDays } from "lucide-react"
+import { CalendarDays, Eye } from "lucide-react"
+import { Link } from "react-router"
+import { Button } from "@/shared/components/button"
 import {
   ResponsiveRowContainer,
   ResponsiveRowDataContainer,
@@ -47,6 +49,20 @@ export function FormsList({ items }: FormsListProps) {
                 </ResponsiveRowHighlightDetail>
               </div>
             </ResponsiveRowHighlight>
+            <Button
+              asChild
+              variant="ghost"
+              className="h-12 border border-muted-foreground/10 bg-muted-foreground/5 text-lg"
+            >
+              <Link
+                to={`/formularios/${form.id}`}
+                aria-label={`Visualizar ${form.title}`}
+                title={`Visualizar ${form.title}`}
+              >
+                <Eye aria-hidden="true" />
+                Visualizar
+              </Link>
+            </Button>
           </ResponsiveRowContainer>
         </div>
       ))}

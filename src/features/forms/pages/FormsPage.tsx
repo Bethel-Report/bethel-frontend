@@ -19,13 +19,12 @@ import { forms } from "../data"
 const pageSize = 5
 
 export function FormsPage() {
-  const [records, setRecords] = useState(forms)
   const [query, setQuery] = useState("")
   const [status, setStatus] = useState("all")
   const [page, setPage] = useState(1)
 
   const search = normalizeSearchText(query.trim())
-  const filteredForms = records.filter(
+  const filteredForms = forms.filter(
     (form) =>
       (status === "all" || form.status === status) &&
       (!search ||
@@ -37,23 +36,6 @@ export function FormsPage() {
   const currentPage = Math.min(page, totalPages)
   const firstItem = (currentPage - 1) * pageSize
   const visibleForms = filteredForms.slice(firstItem, firstItem + pageSize)
-
-  function handleCreate(title: string, description: string) {
-    setRecords((current) => [
-      {
-        id: Math.max(0, ...current.map((form) => form.id)) + 1,
-        title,
-        description,
-        createdAt: new Date().toISOString().slice(0, 10),
-        responses: 0,
-        status: "Pendente",
-      },
-      ...current,
-    ])
-    setQuery("")
-    setStatus("all")
-    setPage(1)
-  }
 
   return (
     <section aria-labelledby="forms-title" className="w-full max-w-[1280px]">
@@ -70,7 +52,7 @@ export function FormsPage() {
           </p>
         </div>
         <div className="flex w-full justify-end md:w-fit">
-          <CreateFormDialog onCreate={handleCreate} />
+          <CreateFormDialog />
         </div>
       </div>
 
