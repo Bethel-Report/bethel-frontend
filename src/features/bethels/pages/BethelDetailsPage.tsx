@@ -69,7 +69,7 @@ export function BethelDetailsPage() {
           </CardHeader>
           <Separator />
           <CardContent className="p-4 sm:p-6">
-            <div className="grid gap-5">
+            <div className="grid gap-5 grid-cols-2">
               <div className="flex items-center gap-3">
                 <div className="flex size-10 items-center justify-center rounded-lg bg-secondary text-primary">
                   <UsersRound aria-hidden="true" className="size-5" />

@@ -15,7 +15,6 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
@@ -33,14 +32,13 @@ type NavItem = {
 type NavbarProps = {
   profile: string
   pathname: string
-  unread: number
   isMember: boolean
   navItems: NavItem[]
 }
 
 type NavbarContentProps = Pick<
   NavbarProps,
-  "profile" | "pathname" | "unread" | "isMember" | "navItems"
+  "profile" | "pathname" | "isMember" | "navItems"
 > & {
   onNavigate: () => void
   mobile?: boolean
@@ -49,7 +47,6 @@ type NavbarContentProps = Pick<
 function NavbarContent({
   profile,
   pathname,
-  unread,
   isMember,
   navItems,
   onNavigate,
@@ -60,13 +57,7 @@ function NavbarContent({
   for (const item of navItems) {
     if (
       (isMember &&
-        ![
-          "/",
-          "/postagens",
-          "/eleicoes",
-          "/materiais",
-          "/notificacoes",
-        ].includes(item.to)) ||
+        !["/", "/postagens", "/eleicoes", "/materiais"].includes(item.to)) ||
       (profile !== "Grande Conselho" && item.to === "/formularios")
     ) {
       continue
@@ -118,11 +109,6 @@ function NavbarContent({
                           <span className="min-w-0 flex-1">{item.label}</span>
                         </Link>
                       </SidebarMenuButton>
-                      {item.to === "/notificacoes" && unread > 0 && (
-                        <SidebarMenuBadge className="bg-secondary text-primary">
-                          {unread}
-                        </SidebarMenuBadge>
-                      )}
                     </SidebarMenuItem>
                   ))}
                 </SidebarMenu>

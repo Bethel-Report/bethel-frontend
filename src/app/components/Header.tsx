@@ -9,22 +9,20 @@ import {
 import {
   Breadcrumb,
   BreadcrumbItem,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/shared/components/breadcrumb"
-import { Bell, LogOut, Menu } from "lucide-react"
+import { LogOut, Menu } from "lucide-react"
 import { Link } from "react-router"
 import { UserAvatar } from "@/features/users/components/UserAvatar"
 import "./Header.css"
 
 type HeaderProps = {
   current: string
-  unread: number
 }
 
-export function Header({ current, unread }: HeaderProps) {
+export function Header({ current }: HeaderProps) {
   const { toggleSidebar } = useSidebar()
 
   return (
@@ -41,11 +39,6 @@ export function Header({ current, unread }: HeaderProps) {
         </Button>
         <Breadcrumb className="hidden sm:block">
           <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link to="/">Organização</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage>{current}</BreadcrumbPage>
@@ -54,18 +47,6 @@ export function Header({ current, unread }: HeaderProps) {
         </Breadcrumb>
       </div>
       <div className="flex shrink-0 items-center gap-3 sm:gap-5">
-        <Button asChild variant="ghost" size="icon" title="Notificações">
-          <Link
-            to="/notificacoes"
-            className="relative"
-            aria-label="Notificações"
-          >
-            <Bell size={18} />
-            {unread > 0 && (
-              <span className="absolute right-2 top-1.5 size-1.5 rounded-full bg-primary" />
-            )}
-          </Link>
-        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger className="hover:bg-transparent" asChild>
             <Button variant="ghost" size="icon" aria-label="Menu do usuário">
