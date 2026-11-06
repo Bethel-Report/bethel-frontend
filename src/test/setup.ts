@@ -9,3 +9,10 @@ HTMLElement.prototype.scrollIntoView = () => {}
 HTMLElement.prototype.hasPointerCapture = () => false
 HTMLElement.prototype.setPointerCapture = () => {}
 HTMLElement.prototype.releasePointerCapture = () => {}
+
+// Os checkboxes do editor observam dimensões que o jsdom não calcula.
+globalThis.ResizeObserver = class {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
