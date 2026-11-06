@@ -35,9 +35,7 @@ export function FinancesPage() {
     (transaction) =>
       (type === "all" || transaction.type === type) &&
       (!search ||
-        [transaction.description, transaction.bethel].some((value) =>
-          normalizeSearchText(value).includes(search),
-        )),
+        normalizeSearchText(transaction.description).includes(search)),
   )
   const totalPages = Math.max(
     1,
