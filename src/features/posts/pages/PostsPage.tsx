@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Plus, Search } from "lucide-react"
-import { Link } from "react-router"
+import { Link, useSearchParams } from "react-router"
 import { normalizeSearchText } from "@/lib/utils"
-import { bethelPosts, bethels } from "@/features/bethels/data"
+import { bethelPosts, postsWithBethel } from "@/features/bethels/data"
 import { Button } from "@/shared/components/button"
 import { Input } from "@/shared/components/input"
 import {
@@ -18,17 +18,14 @@ import { PostCard } from "../components/PostCard"
 
 const pageSize = 6
 const categories = [...new Set(bethelPosts.map((post) => post.category))]
-const postsWithBethel = bethelPosts
-  .flatMap((post) => {
-    const bethel = bethels.find((item) => item.id === post.bethelId)
-    return bethel ? [{ post, bethel }] : []
-  })
-  .sort((a, b) => b.post.publishedAt.localeCompare(a.post.publishedAt))
 
 export function PostsPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [query, setQuery] = useState("")
-  const [category, setCategory] = useState("all")
   const [page, setPage] = useState(1)
+  const categoryParam = searchParams.get("categoria")
+  const category =
+    categoryParam && categories.includes(categoryParam) ? categoryParam : "all"
   const search = normalizeSearchText(query.trim())
   const filteredPosts = postsWithBethel.filter(
     ({ post, bethel }) =>
@@ -87,7 +84,7 @@ export function PostsPage() {
         <Select
           value={category}
           onValueChange={(value) => {
-            setCategory(value)
+            setSearchParams(value === "all" ? {} : { categoria: value })
             setPage(1)
           }}
         >

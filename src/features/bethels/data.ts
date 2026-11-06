@@ -122,4 +122,29 @@ export const bethelPosts: BethelPost[] = [
     publishedAt: "2026-10-05",
     category: "Atividade",
   },
+  {
+    id: 5,
+    bethelId: 1,
+    title: "Comunicado sobre a próxima reunião",
+    summary:
+      "Confira as informações sobre a próxima reunião e a programação prevista para o Bethel.",
+    publishedAt: "2026-10-20",
+    category: "Comunicado",
+  },
+  {
+    id: 6,
+    bethelId: 2,
+    title: "Atualização do calendário de atividades",
+    summary:
+      "O calendário de atividades do Bethel foi atualizado. Consulte as novas datas dos encontros.",
+    publishedAt: "2026-10-15",
+    category: "Comunicado",
+  },
 ]
+
+export const postsWithBethel = bethelPosts
+  .flatMap((post) => {
+    const bethel = bethels.find((item) => item.id === post.bethelId)
+    return bethel ? [{ post, bethel }] : []
+  })
+  .sort((a, b) => b.post.publishedAt.localeCompare(a.post.publishedAt))
