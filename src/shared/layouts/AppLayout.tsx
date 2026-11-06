@@ -39,6 +39,16 @@ const pageRoutes = [
   { path: "/betheis/:id", title: "Detalhes do Bethel", navPath: "/betheis" },
   { path: "/membros/novo", title: "Adicionar membro", navPath: "/membros" },
   { path: "/membros/:id", title: "Detalhes do membro", navPath: "/membros" },
+  {
+    path: "/formularios/:id/estrutura",
+    title: "Editar estrutura",
+    navPath: "/formularios",
+  },
+  {
+    path: "/formularios/:id",
+    title: "Detalhes do formulário",
+    navPath: "/formularios",
+  },
   { path: "/postagens/novo", title: "Criar postagem", navPath: "/postagens" },
   {
     path: "/postagens/:id",
