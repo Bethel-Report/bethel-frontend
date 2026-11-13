@@ -32,6 +32,10 @@ function createOption(): FieldOption {
   return { id: crypto.randomUUID(), value: "" }
 }
 
+function createSection(): Section {
+  return { id: crypto.randomUUID(), name: "", description: "", fields: [] }
+}
+
 function loadSections(formId: string): Section[] {
   try {
     const saved = localStorage.getItem(`form-structure:${formId}`)
@@ -65,15 +69,13 @@ function loadSections(formId: string): Section[] {
 }
 
 export function useFormStructure(formId: string) {
-  const [sections, setSections] = useState<Section[]>(() =>
-    loadSections(formId),
-  )
+  const [sections, setSections] = useState<Section[]>(() => {
+    const savedSections = loadSections(formId)
+    return savedSections.length > 0 ? savedSections : [createSection()]
+  })
 
   function addSection() {
-    setSections((current) => [
-      ...current,
-      { id: crypto.randomUUID(), name: "", description: "", fields: [] },
-    ])
+    setSections((current) => [...current, createSection()])
   }
 
   function updateSection(sectionId: string, changes: SectionChanges) {

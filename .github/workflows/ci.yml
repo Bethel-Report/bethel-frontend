@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.22.0
+          node-version: 22.22.2
           cache: yarn
 
       - run: yarn install --frozen-lockfile
@@ -29,22 +29,36 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.22.0
+          node-version: 22.22.2
           cache: yarn
 
       - run: yarn install --frozen-lockfile
       - run: yarn typecheck
 
-  build:
-    name: Build
+  test:
+    name: Tests
     runs-on: ubuntu-latest
-    needs: [lint, typecheck]
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22.22.0
+          node-version: 22.22.2
+          cache: yarn
+
+      - run: yarn install --frozen-lockfile
+      - run: yarn test
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck, test]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.2
           cache: yarn
 
       - run: yarn install --frozen-lockfile

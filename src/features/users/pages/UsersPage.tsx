@@ -28,10 +28,7 @@ export function UsersPage() {
   const filteredUsers = users.filter(
     (user) =>
       (status === "all" || user.status === status) &&
-      (!search ||
-        [user.name, user.email, user.bethel].some((value) =>
-          normalizeSearchText(value).includes(search),
-        )),
+      (!search || normalizeSearchText(user.email).includes(search)),
   )
   const totalPages = Math.max(1, Math.ceil(filteredUsers.length / pageSize))
   const currentPage = Math.min(page, totalPages)
@@ -66,7 +63,7 @@ export function UsersPage() {
             className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
           />
           <Input
-            aria-label="Buscar usuários por nome"
+            aria-label="Buscar usuários por email"
             className="h-11 bg-card pl-9 shadow-none"
             placeholder="Buscar usuário"
             value={query}

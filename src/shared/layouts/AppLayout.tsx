@@ -5,7 +5,6 @@ import {
   Newspaper,
   ClipboardList,
   Wallet,
-  FolderOpen,
 } from "lucide-react"
 import { matchPath, Outlet, useLocation } from "react-router"
 import { Footer } from "@/app/components/Footer"
@@ -26,12 +25,6 @@ const navItems = [
     group: "GESTÃO",
   },
   { to: "/financas", label: "Finanças", icon: Wallet, group: "" },
-  {
-    to: "/materiais",
-    label: "Materiais e documentos",
-    icon: FolderOpen,
-    group: "ORGANIZAÇÃO",
-  },
 ]
 
 const pageRoutes = [

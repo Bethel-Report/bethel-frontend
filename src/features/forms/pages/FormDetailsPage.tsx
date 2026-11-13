@@ -197,7 +197,7 @@ export function FormDetailsPage() {
               />
               <Input
                 aria-label="Buscar bethéis por nome ou localização"
-                placeholder="Buscar Bethel"
+                placeholder="Buscar bethel"
                 value={query}
                 onChange={(event) => {
                   setQuery(event.target.value)

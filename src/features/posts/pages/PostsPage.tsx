@@ -28,12 +28,9 @@ export function PostsPage() {
     categoryParam && categories.includes(categoryParam) ? categoryParam : "all"
   const search = normalizeSearchText(query.trim())
   const filteredPosts = postsWithBethel.filter(
-    ({ post, bethel }) =>
+    ({ post }) =>
       (category === "all" || post.category === category) &&
-      (!search ||
-        [post.title, post.summary, bethel.name].some((value) =>
-          normalizeSearchText(value).includes(search),
-        )),
+      (!search || normalizeSearchText(post.title).includes(search)),
   )
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / pageSize))
   const currentPage = Math.min(page, totalPages)

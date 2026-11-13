@@ -1,11 +1,11 @@
 # syntax=docker/dockerfile:1.7
-FROM node:22.22.0-alpine AS deps
+FROM node:22.22.2-alpine AS deps
 WORKDIR /app
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
-FROM node:22.22.0-alpine AS build
+FROM node:22.22.2-alpine AS build
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
