@@ -1,7 +1,11 @@
+import { AuthGate } from "@/features/auth/components/AuthGate"
+import { AdmissionPage } from "@/features/auth/pages/AdmissionPage"
+import { AuthErrorPage } from "@/features/auth/pages/AuthErrorPage"
 import { lazy, Suspense } from "react"
 import { AppLayout } from "@/shared/layouts/AppLayout"
 import { NotFoundPage } from "@/shared/layouts/NotFoundPage"
 import { BrowserRouter, Route, Routes } from "react-router"
+import { LoadingPage } from "@/shared/pages/LoadingPage"
 
 const HomePage = lazy(() =>
   import("@/shared/pages/HomePage").then((m) => ({ default: m.HomePage })),
@@ -81,40 +85,39 @@ const LoginPage = lazy(() =>
     default: m.LoginPage,
   })),
 )
-const SetPasswordPage = lazy(() =>
-  import("@/features/auth/pages/SetPasswordPage").then((m) => ({
-    default: m.SetPasswordPage,
-  })),
-)
 
 export function AppRoutes() {
   return (
     <BrowserRouter>
-      <Suspense fallback={null}>
+      <Suspense fallback={<LoadingPage />}>
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/definir-senha" element={<SetPasswordPage />} />
-          <Route path="/componentes" element={<ComponentsPage />} />
-          <Route element={<AppLayout />}>
-            <Route index path="/" element={<HomePage />} />
-            <Route path="/betheis" element={<BethelsPage />} />
-            <Route path="/betheis/:id" element={<BethelDetailsPage />} />
-            <Route path="/betheis/novo" element={<NewBethelPage />} />
-            <Route path="/postagens" element={<PostsPage />} />
-            <Route path="/postagens/:id" element={<PostDetailsPage />} />
-            <Route path="/postagens/novo" element={<NewPostPage />} />
-            <Route path="/membros" element={<UsersPage />} />
-            <Route path="/financas" element={<FinancesPage />} />
-            <Route path="/formularios" element={<FormsPage />} />
-            <Route path="/formularios/:id" element={<FormDetailsPage />} />
-            <Route
-              path="/formularios/:id/estrutura"
-              element={<EditFormStructurePage />}
-            />
-            <Route path="/membros/:id" element={<UserDetailsPage />} />
-            <Route path="/membros/novo" element={<NewUserPage />} />
+          <Route element={<AuthGate />}>
+            <Route path="/admission/complete" element={<AdmissionPage />} />
+            <Route path="/auth/error" element={<AuthErrorPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/componentes" element={<ComponentsPage />} />
+            <Route element={<AppLayout />}>
+              <Route index path="/" element={<HomePage />} />
+
+              <Route path="/betheis" element={<BethelsPage />} />
+              <Route path="/betheis/:id" element={<BethelDetailsPage />} />
+              <Route path="/betheis/novo" element={<NewBethelPage />} />
+              <Route path="/postagens" element={<PostsPage />} />
+              <Route path="/postagens/:id" element={<PostDetailsPage />} />
+              <Route path="/postagens/novo" element={<NewPostPage />} />
+              <Route path="/membros" element={<UsersPage />} />
+              <Route path="/financas" element={<FinancesPage />} />
+              <Route path="/formularios" element={<FormsPage />} />
+              <Route path="/formularios/:id" element={<FormDetailsPage />} />
+              <Route
+                path="/formularios/:id/estrutura"
+                element={<EditFormStructurePage />}
+              />
+              <Route path="/membros/:id" element={<UserDetailsPage />} />
+              <Route path="/membros/novo" element={<NewUserPage />} />
+            </Route>
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
-          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

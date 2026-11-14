@@ -18,3 +18,14 @@ export const setPasswordSchema = z
   })
 
 export type SetPasswordFormValues = z.infer<typeof setPasswordSchema>
+
+export const admissionSchema = z.object({
+  name: z.string().trim().min(1, "Informe seu nome."),
+  birthday: z.iso.date("Informe uma data de nascimento válida."),
+  city: z.string().trim().min(1, "Informe sua cidade."),
+  address: z.string().trim().min(1, "Informe seu endereço."),
+  volunteer: z.boolean(),
+  masonicRelationship: z.boolean(),
+  member: z.boolean(),
+  sponsorship: z.boolean(),
+})

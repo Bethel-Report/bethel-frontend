@@ -1,3 +1,5 @@
+import { useAuth } from "@/features/auth/hooks/useAuth"
+import { canAccess, roleNames } from "@/features/auth/permissions"
 import {
   LayoutDashboard,
   Landmark,
@@ -54,8 +56,11 @@ const pageRoutes = [
 
 export function AppLayout() {
   const { pathname } = useLocation()
-  const profile = "Grande Conselho"
+  const { profile: user } = useAuth()
+  const role = user?.permission?.role
+  const profile = role ? roleNames[role] : ""
   const isMember = profile.startsWith("Membro")
+
   const pageRoute = pageRoutes.find(({ path }) => matchPath(path, pathname))
   const current =
     pageRoute?.title ??
@@ -70,7 +75,7 @@ export function AppLayout() {
       <Navbar
         profile={profile}
         pathname={navPathname}
-        navItems={navItems}
+        navItems={navItems.filter((item) => canAccess(role, item.to))}
         isMember={isMember}
       />
       <div className="flex min-w-0 flex-1 flex-col">
