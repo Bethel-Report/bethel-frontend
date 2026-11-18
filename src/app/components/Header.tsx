@@ -1,3 +1,4 @@
+import { useAuth } from "@/features/auth/hooks/useAuth"
 import { Button } from "@/shared/components/button"
 import { useSidebar } from "@/shared/components/sidebar"
 import {
@@ -14,7 +15,6 @@ import {
   BreadcrumbSeparator,
 } from "@/shared/components/breadcrumb"
 import { LogOut, Menu } from "lucide-react"
-import { Link } from "react-router"
 import { UserAvatar } from "@/features/users/components/UserAvatar"
 import "./Header.css"
 
@@ -23,6 +23,7 @@ type HeaderProps = {
 }
 
 export function Header({ current }: HeaderProps) {
+  const { profile, logout } = useAuth()
   const { toggleSidebar } = useSidebar()
 
   return (
@@ -50,15 +51,16 @@ export function Header({ current }: HeaderProps) {
         <DropdownMenu>
           <DropdownMenuTrigger className="hover:bg-transparent" asChild>
             <Button variant="ghost" size="icon" aria-label="Menu do usuário">
-              <UserAvatar name={"Mariana"} />
+              <UserAvatar name={profile?.name || "Usuário"} />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="user-menu-content p-0" align="end">
-            <DropdownMenuItem className="cursor-pointer py-2 px-4" asChild>
-              <Link to="/login">
-                <LogOut aria-hidden="true" />
-                Sair
-              </Link>
+            <DropdownMenuItem
+              className="cursor-pointer py-2 px-4"
+              onSelect={() => void logout()}
+            >
+              <LogOut aria-hidden="true" />
+              Sair
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
